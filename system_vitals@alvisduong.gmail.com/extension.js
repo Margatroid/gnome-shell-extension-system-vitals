@@ -6,6 +6,7 @@ const Mainloop = imports.mainloop;
 
 let label;
 let updater;
+let loopId;
 
 function init() {
     if (!label) {
@@ -13,15 +14,20 @@ function init() {
     }
 
     updater = new Updater();
-    Mainloop.timeout_add_seconds(1, updater.update);
 }
 
 function enable() {
     Main.panel._rightBox.insert_child_at_index(label, 0);
+
+    // Start main loop.
+    loopId = Mainloop.timeout_add_seconds(1, updater.update);
 }
 
 function disable() {
     Main.panel._rightBox.remove_child(label);
+
+    // Disconnect timer.
+    Mainloop.source_remove(loopId);
 }
 
 function Exec(argv) {
