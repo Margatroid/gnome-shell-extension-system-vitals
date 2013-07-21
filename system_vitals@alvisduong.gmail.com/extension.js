@@ -65,11 +65,11 @@ Updater.prototype = {
         let idleTimeDifference  = currentIdleTime - this._totalIdleTime;
         let totalTimeDifference = currentTotalCpuTime - this._totalCpuTime;
 
-        let usage =
-            (totalTimeDifference - idleTimeDifference) / totalTimeDifference;
-
         this._totalIdleTime = currentIdleTime;
         this._totalCpuTime  = currentTotalCpuTime;
+
+        let usage =
+            (totalTimeDifference - idleTimeDifference) / totalTimeDifference;
 
         return (usage * 100).toFixed(1);
     }
