@@ -1,20 +1,23 @@
-const St   = imports.gi.St;
-const Main = imports.ui.main;
-const GLib = imports.gi.GLib;
-const Gio  = imports.gi.Gio;
+const St       = imports.gi.St;
+const Main     = imports.ui.main;
+const GLib     = imports.gi.GLib;
+const Gio      = imports.gi.Gio;
+const Mainloop = imports.mainloop;
 
 let label;
+let updater;
 
 function init() {
     if (!label) {
         label = new St.Label({ text: 'Hello world' });
     }
+
+    updater = new Updater();
+    Mainloop.timeout_add_seconds(1, updater.update);
 }
 
 function enable() {
     Main.panel._rightBox.insert_child_at_index(label, 0);
-    let foo = new Exec('grr');
-    foo.run();
 }
 
 function disable() {
@@ -42,5 +45,15 @@ Exec.prototype = {
         let out_reader = new Gio.DataInputStream({ base_stream: new Gio.UnixInputStream({fd: out_fd}) });
         let [out, size] = out_reader.read_line(null);
         label.set_text(out.toString());
+    }
+}
+
+function Updater() {}
+
+Updater.prototype = {
+    update : function update() {
+        let foo = new Exec('grr');
+        foo.run();
+        return true;
     }
 }
