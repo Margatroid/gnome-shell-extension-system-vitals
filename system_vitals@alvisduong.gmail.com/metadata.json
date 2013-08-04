@@ -1,5 +1,5 @@
 {
-  "shell-version": ["3.8.3"],
+  "shell-version": ["3.8.4"],
   "uuid": "system_vitals@alvisduong.gmail.com",
   "name": "System Vitals",
   "description": "Display hardware vitals in status area"
